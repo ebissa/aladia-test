@@ -1,3 +1,4 @@
+
 <template>
   <div class="flex justify-center items-center h-screen bg-black">
     <div class="relative z-10 w-full max-w-md p-5 bg-black border border-white rounded-lg shadow-lg">
@@ -8,7 +9,7 @@
           @update:profilePicture="updateProfilePicture" 
         />
         <p v-if="profilePictureError" class="text-red-500 text-sm">{{ profilePictureError }}</p>
-        
+        <!-- update acceptedTerms -->
         <TermsCheckboxComponent @update:acceptedTerms="updateAcceptedTerms" />
         <p v-if="termsError" class="text-red-500 text-sm">{{ termsError }}</p>
 
