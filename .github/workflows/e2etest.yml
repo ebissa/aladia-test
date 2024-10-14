@@ -1,0 +1,44 @@
+name: E2E Tests
+
+on:
+  pull_request:
+    branches:
+      - "**"
+
+jobs:
+  e2e_visual_regression:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.head_ref }}
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "20"
+
+      - name: Install dependencies
+        run: |
+          npm install
+        working-directory: nuxt-app
+      
+      - name: Start Application
+        run: |
+          npm run dev &
+        working-directory: nuxt-app
+        env:
+          VITE_BASE_URL: http://localhost:3000
+
+      - name: Wait for application to start
+        run: |
+          npx wait-on http://localhost:3000
+        working-directory: nuxt-app
+
+      - name: Run Cypress Tests with Chromatic
+        run: |
+          CHROMATIC_PROJECT_TOKEN=chpt_356f336c2d7b42f ELECTRON_EXTRA_LAUNCH_ARGS=--remote-debugging-port=9222 npx cypress run
+        working-directory: nuxt-app
