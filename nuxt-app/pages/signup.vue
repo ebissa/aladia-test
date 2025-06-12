@@ -116,12 +116,12 @@ export default {
       let isValid = true;
 
       // Remove the profile picture validation
-      // if (!this.profilePicture) {
-      //   this.profilePictureError = 'Profile picture is required';
-      //   isValid = false;
-      // } else {
-      //   this.profilePictureError = ''; // Clear error message
-      // }
+      if (!this.profilePicture) {
+        this.profilePictureError = 'Profile picture is required';
+        isValid = false;
+      } else {
+        this.profilePictureError = ''; // Clear error message
+      }
 
       if (!this.acceptedTerms) {
         this.termsError = 'You must accept the terms and conditions';
